@@ -1,7 +1,7 @@
 from utils import *
 import streamlit as st
 
-junk_chars = ['"', "'", "</p>", "<jats:p>", "<p>"]
+junk_chars = ['"', "'", "</p>", "<jats:p>", "<p>",  '</italic>', '<italic>', '</jats:bold>', '</jats:p>', '<jats:title>', '</jats:title>', '<jats:italic>', "(", ")"]
 
 st.title("The Poetry Machine")
 
@@ -20,6 +20,8 @@ if go_button:
     for c in junk_chars:
         poem = poem.replace(c, "")
     poem = poem.capitalize()
+    poem = poem.strip()
+    poem += "."
     title = title.capitalize()
     title_md = f'<p style="font-family:Times New Roman; font-size:2em;">{title}</p>'
     st.markdown(title_md, unsafe_allow_html = True)

@@ -28,7 +28,7 @@ def parse_abstract(crossref_return):
     try:
         abstract = crossref_return['abstract']
     except:
-        abstract = None
+        abstract = " "
 
     return abstract
 
@@ -37,20 +37,20 @@ def parse_date(crossref_return):
 
 def parse_title(crossref_return):
     try:
-        title = w['title'][0]
+        title = crossref_return['title'][0]
     except:
-        title = None
-    return
+        title = " "
+    return title
 
 def search_crossref(query):
 
-  works = cr.works(query=query)['message']['items']
+  works = cr.works(query=query, limit=100)['message']['items']
   
   articles = []
 
   for w in works:
     authors = parse_authors(w)
-    title = w['title'][0]
+    title = parse_title(w)
     abstract = parse_abstract(w)
     date = parse_date(w)
 
@@ -67,9 +67,10 @@ def get_corpus(article_list):
   strings = []
   titles = []
   for a in article_list:
-    strings.append(a.title.lower())
-    titles.append(a.title.lower())
-    if a.abstract != None:
+    if a.title != " ":
+        strings.append(a.title.lower())
+        titles.append(a.title.lower())
+    if a.abstract != " ":
       strings.append(a.abstract.lower())
 
   corpus = " ".join(strings)
@@ -112,7 +113,7 @@ def generate_poem(search_string, length):
   for i in range(title_len):
     choice = np.random.choice(title_dict[title_chain[-1]])
     if i == title_len-1:
-        if choice in ["and", "the", "or", "of"]:
+        if choice in ["and", "the", "or", "of", "a", "is"]:
             i -=1
         else:
             title_chain.append(choice)
@@ -126,7 +127,7 @@ def generate_poem(search_string, length):
   for i in range(n_words):
       if i == n_words-1:
         choice = np.random.choice(word_dict[chain[-1]])
-        if choice in ["and", "the", "or", "of"]:
+        if choice in ["and", "the", "or", "of", "a", "is"]:
             i -=1
         else:
             chain.append(np.random.choice(word_dict[chain[-1]]))
@@ -142,7 +143,7 @@ def generate_poem(search_string, length):
 from random import random
 def jitter_poem_string(chain):
     poem = []
-    space = " "
+    space = "\t"
     newline = "\n "
     for i in range(0, len(chain)):
         # whitespace = randint(1, 10)
@@ -150,7 +151,7 @@ def jitter_poem_string(chain):
         which_one = random()
         poem.append(chain[i])
         if which_one >= 0.34 and which_one <= 0.66:
-            for n in range(np.random.randint(0,10)):
+            for n in range(np.random.randint(0,3)):
                 poem.append(space)
         elif which_one >= 0.67:
             for n in range(np.random.randint(1,6)):
