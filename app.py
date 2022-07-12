@@ -14,6 +14,7 @@ go_button = st.button("Compose")
 
 
 if go_button:
-    poem, title = generate_poem(text_in, np.random.randint(4,100))
+    poem, title = generate_poem(text_in, np.random.randint(4,60))
     st.header(title)
     st.text(poem)
+    st.download_button("Download Poem", poem, f'{title}.txt')
