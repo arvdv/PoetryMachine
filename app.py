@@ -1,7 +1,7 @@
 from utils import *
 import streamlit as st
 
-junk_chars = ['"', "'", "</p>", "<jats:p>", "<p>"]
+junk_chars = ['"', "'", "</p>", "<jats:p>", "<p>",  '</italic>', '<italic>', '</jats:bold>']
 
 st.title("The Poetry Machine")
 
@@ -21,6 +21,8 @@ if go_button:
         poem = poem.replace(c, "")
 
     poem = poem.capitalize()
+    poem = poem.strip()
+    poem += "."
     title = title.capitalize()
     st.header(title)
     st.text(poem)

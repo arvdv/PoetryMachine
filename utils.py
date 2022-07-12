@@ -28,7 +28,7 @@ def parse_abstract(crossref_return):
     try:
         abstract = crossref_return['abstract']
     except:
-        abstract = None
+        abstract = " "
 
     return abstract
 
@@ -37,20 +37,20 @@ def parse_date(crossref_return):
 
 def parse_title(crossref_return):
     try:
-        title = w['title'][0]
+        title = crossref_return['title'][0]
     except:
-        title = None
-    return
+        title = " "
+    return title
 
 def search_crossref(query):
 
-  works = cr.works(query=query)['message']['items']
+  works = cr.works(query=query, limit=100)['message']['items']
   
   articles = []
 
   for w in works:
     authors = parse_authors(w)
-    title = w['title'][0]
+    title = parse_title(w)
     abstract = parse_abstract(w)
     date = parse_date(w)
 
@@ -67,9 +67,10 @@ def get_corpus(article_list):
   strings = []
   titles = []
   for a in article_list:
-    strings.append(a.title.lower())
-    titles.append(a.title.lower())
-    if a.abstract != None:
+    if a.title != " ":
+        strings.append(a.title.lower())
+        titles.append(a.title.lower())
+    if a.abstract != " ":
       strings.append(a.abstract.lower())
 
   corpus = " ".join(strings)
