@@ -35,6 +35,13 @@ def parse_abstract(crossref_return):
 def parse_date(crossref_return):
     return crossref_return['created']['date-time']
 
+def parse_title(crossref_return):
+    try:
+        title = w['title'][0]
+    except:
+        title = None
+    return
+
 def search_crossref(query):
 
   works = cr.works(query=query)['message']['items']
@@ -101,15 +108,31 @@ def generate_poem(search_string, length):
           title_dict[t_word_1] = [t_word_2]
 
   title_chain = [title_fw]
-
-  for i in range(np.random.choice(list(range(2,4)))):
-    title_chain.append(np.random.choice(title_dict[title_chain[-1]]))
+  title_len = np.random.choice(list(range(2,6)))
+  for i in range(title_len):
+    choice = np.random.choice(title_dict[title_chain[-1]])
+    if i == title_len-1:
+        if choice in ["and", "the", "or", "of"]:
+            i -=1
+        else:
+            title_chain.append(choice)
+    else:
+        title_chain.append(choice)
+    #title_chain.append()
 
   chain = [first_word]
   n_words = length
 
   for i in range(n_words):
-      chain.append(np.random.choice(word_dict[chain[-1]]))
+      if i == n_words-1:
+        choice = np.random.choice(word_dict[chain[-1]])
+        if choice in ["and", "the", "or", "of"]:
+            i -=1
+        else:
+            chain.append(np.random.choice(word_dict[chain[-1]]))
+      else:
+            chain.append(np.random.choice(word_dict[chain[-1]]))
+
 
 
   poem = ' '.join(jitter_poem_string(chain))
