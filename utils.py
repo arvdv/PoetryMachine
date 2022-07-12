@@ -1,7 +1,7 @@
 import streamlit as st
 from habanero import Crossref
 import numpy as np
-
+import random
 cr = Crossref()
 
 class Article:
@@ -58,22 +58,31 @@ def make_pairs(corpus):
         
 def get_corpus(article_list):
   strings = []
+  titles = []
   for a in article_list:
     strings.append(a.title.lower())
+    titles.append(a.title.lower())
     if a.abstract != None:
       strings.append(a.abstract.lower())
 
   corpus = " ".join(strings)
+  corpus_titles = " ".join(titles)
   #vec = CountVectorizer()
   #X = vec.fit_transform(strings)
 
-  return corpus
+  return corpus, corpus_titles
+
+
 
 
 def generate_poem(search_string, length):
     
-  corpus = get_corpus(search_crossref(search_string)).split()
-  corpus = corpus
+  corpus, titles = get_corpus(search_crossref(search_string))
+  corpus = corpus.split()
+  titles = titles.split()
+
+  title_pairs = make_pairs(titles)
+  title_fw = np.random.choice(titles)
   pairs = make_pairs(corpus)
   first_word = np.random.choice(corpus)
 
@@ -84,6 +93,17 @@ def generate_poem(search_string, length):
       else:
           word_dict[word_1] = [word_2]
 
+  title_dict = {}
+  for t_word_1, t_word_2 in title_pairs:
+      if t_word_1 in title_dict.keys():
+          title_dict[t_word_1].append(t_word_2)
+      else:
+          title_dict[t_word_1] = [t_word_2]
+
+  title_chain = [title_fw]
+
+  for i in range(np.random.choice(list(range(2,4)))):
+    title_chain.append(np.random.choice(title_dict[title_chain[-1]]))
 
   chain = [first_word]
   n_words = length
@@ -93,7 +113,8 @@ def generate_poem(search_string, length):
 
 
   poem = ' '.join(jitter_poem_string(chain))
-  return poem
+  title = ' '.join(title_chain)
+  return poem, title
 
 from random import random
 def jitter_poem_string(chain):
@@ -111,5 +132,5 @@ def jitter_poem_string(chain):
             poem.append(newline)
 
 
-            
+
     return poem

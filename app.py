@@ -14,4 +14,6 @@ with c2:
 
 
 if go_button:
-    st.text(generate_poem(text_in, number_words))
+    poem, title = generate_poem(text_in, number_words)
+    st.header(title)
+    st.text(poem)
