@@ -19,9 +19,11 @@ if go_button:
     poem, title = generate_poem(text_in, np.random.randint(4,60))
     for c in junk_chars:
         poem = poem.replace(c, "")
-
     poem = poem.capitalize()
     title = title.capitalize()
-    st.header(title)
-    st.text(poem)
+    title_md = f'<p style="font-family:Times New Roman; font-size:2em;">{title}</p>'
+    st.markdown(title_md, unsafe_allow_html = True)
+    poem_md = poem.replace("\n", "<br />")
+    poem_md = f'<p style="font-family:Times New Roman; font-size:12;">{poem_md}</p>'
+    st.markdown(poem_md, unsafe_allow_html=True)
     st.download_button("Download Poem", poem, f'{title}.txt')
