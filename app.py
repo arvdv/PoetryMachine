@@ -1,7 +1,7 @@
 from utils import *
 import streamlit as st
 
-junk_chars = ['"', "'", "</p>", "<jats:p>", "<p>",  '</italic>', '<italic>', '</jats:bold>', '</jats:p>', '<jats:title>', '</jats:title>', '<jats:italic>']
+junk_chars = ['"', "'", "</p>", "<jats:p>", "<p>",  '</italic>', '<italic>', '</jats:bold>', '</jats:p>', '<jats:title>', '</jats:title>', '<jats:italic>', "(", ")"]
 
 st.title("The Poetry Machine")
 

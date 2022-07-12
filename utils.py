@@ -143,7 +143,7 @@ def generate_poem(search_string, length):
 from random import random
 def jitter_poem_string(chain):
     poem = []
-    space = " "
+    space = "\t"
     newline = "\n "
     for i in range(0, len(chain)):
         # whitespace = randint(1, 10)
