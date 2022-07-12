@@ -16,7 +16,7 @@ go_button = st.button("Compose")
 
 
 if go_button:
-    poem, title = generate_poem(text_in, np.random.randint(4,60))
+    poem, title = generate_poem(text_in, np.random.randint(4,40))
     for c in junk_chars:
         poem = poem.replace(c, "")
     poem = poem.capitalize()
