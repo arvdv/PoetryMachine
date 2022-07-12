@@ -92,5 +92,24 @@ def generate_poem(search_string, length):
       chain.append(np.random.choice(word_dict[chain[-1]]))
 
 
-  poem = ' '.join(chain)
+  poem = ' '.join(jitter_poem_string(chain))
   return poem
+
+from random import random
+def jitter_poem_string(chain):
+    poem = []
+    space = " "
+    newline = "\n"
+    for i in range(0, len(chain)):
+        # whitespace = randint(1, 10)
+        # linebreaks = randint(0, 3)
+        which_one = random()
+        poem.append(chain[i])
+        if which_one >= 0.34 and which_one <= 0.66:
+            poem.append(space)
+        elif which_one >= 0.67:
+            poem.append(newline)
+
+
+            
+    return poem
