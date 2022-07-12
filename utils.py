@@ -143,16 +143,18 @@ from random import random
 def jitter_poem_string(chain):
     poem = []
     space = " "
-    newline = "\n"
+    newline = "\n "
     for i in range(0, len(chain)):
         # whitespace = randint(1, 10)
         # linebreaks = randint(0, 3)
         which_one = random()
         poem.append(chain[i])
         if which_one >= 0.34 and which_one <= 0.66:
-            poem.append(space)
+            for n in range(np.random.randint(0,10)):
+                poem.append(space)
         elif which_one >= 0.67:
-            poem.append(newline)
+            for n in range(np.random.randint(1,6)):
+                poem.append(newline)
 
 
 
