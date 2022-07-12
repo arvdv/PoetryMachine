@@ -1,6 +1,7 @@
 from utils import *
 import streamlit as st
 
+junk_chars = ['"', "'", "</p>", "<jats:p>", "<p>"]
 
 st.title("The Poetry Machine")
 
@@ -13,8 +14,14 @@ text_in = st.text_input("Poetry Subject")
 go_button = st.button("Compose")
 
 
+
 if go_button:
     poem, title = generate_poem(text_in, np.random.randint(4,60))
+    for c in junk_chars:
+        poem = poem.replace(c, "")
+
+    poem = poem.capitalize()
+    title = title.capitalize()
     st.header(title)
     st.text(poem)
     st.download_button("Download Poem", poem, f'{title}.txt')
