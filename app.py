@@ -14,4 +14,4 @@ with c2:
 
 
 if go_button:
-    st.write(generate_poem(text_in, number_words))
+    st.text(generate_poem(text_in, number_words))
