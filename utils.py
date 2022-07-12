@@ -113,7 +113,7 @@ def generate_poem(search_string, length):
   for i in range(title_len):
     choice = np.random.choice(title_dict[title_chain[-1]])
     if i == title_len-1:
-        if choice in ["and", "the", "or", "of"]:
+        if choice in ["and", "the", "or", "of", "a"]:
             i -=1
         else:
             title_chain.append(choice)
@@ -127,7 +127,7 @@ def generate_poem(search_string, length):
   for i in range(n_words):
       if i == n_words-1:
         choice = np.random.choice(word_dict[chain[-1]])
-        if choice in ["and", "the", "or", "of"]:
+        if choice in ["and", "the", "or", "of", "a"]:
             i -=1
         else:
             chain.append(np.random.choice(word_dict[chain[-1]]))
