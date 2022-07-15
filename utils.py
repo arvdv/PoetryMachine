@@ -153,8 +153,8 @@ def jitter_poem_string(chain):
         if which_one >= 0.34 and which_one <= 0.66:
             for n in range(np.random.randint(0,3)):
                 poem.append(space)
-        elif which_one >= 0.67:
-            for n in range(np.random.randint(1,6)):
+        elif which_one >= 0.77:
+            for n in range(np.random.randint(1,2)):
                 poem.append(newline)
 
 
